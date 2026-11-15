@@ -28,13 +28,13 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 
 ## Implementation decisions
 
-- **Presentation tier:** Keep React components responsible for rendering and user interaction. Use the shared API client with relative `/api` paths; keep persistence and business rules out of the frontend. Every data-driven page should provide accessible loading, empty, and error states.
-- **Logic tier:** Keep HTTP validation, orchestration, and response formatting in Express routes/services. Validate request shape and referenced records before writes, return deliberate 4xx responses for invalid or unknown input, and avoid exposing database cast errors as 500s.
-- **Data tier:** Use Mongoose models to define required fields, types, and references. Keep seed data representative of all four API capabilities and make seeding idempotent.
-- **Activity tracking:** Accept `userId`, `teamId`, `type`, and `minutes`; validate both IDs and confirm the user and team exist before creating an activity. Store the corresponding user/team references and submitted values with server-computed `points` and `occurredAt`. Keep the scoring rule in backend logic rather than the UI.
-- **Team management:** Require a name, retain the submitted name and mascot, and store members as user references. Use the same team model for listing and creation.
-- **Leaderboard:** Calculate each team's total from its activities' points, order teams by total points descending, and assign ranks starting at 1. Return the contract fields `teamName`, `totalPoints`, and `rank`.
-- **Workout suggestions:** Find the user by email and use their goal and recent activity patterns to select relevant workouts. Include a human-readable reason for the first suggestion; return a deliberate 4xx when no user matches.
+- Presentation tier decision: Keep React components responsible for rendering and user interaction. Use the shared API client with relative `/api` paths; keep persistence and business rules out of the frontend. Every data-driven page should provide accessible loading, empty, and error states.
+- Logic tier decision: Keep HTTP validation, orchestration, and response formatting in Express routes/services. Validate request shape and referenced records before writes, return deliberate 4xx responses for invalid or unknown input, and avoid exposing database cast errors as 500s.
+- Data tier decision: Use Mongoose models to define required fields, types, and references. Keep seed data representative of all four API capabilities and make seeding idempotent.
+- Activity tracking approach: Accept `userId`, `teamId`, `type`, and `minutes`; validate both IDs and confirm the user and team exist before creating an activity. Store the corresponding user/team references and submitted values with server-computed `points` and `occurredAt`. Keep the scoring rule in backend logic rather than the UI.
+- Team management approach: Require a name, retain the submitted name and mascot, and store members as user references. Use the same team model for listing and creation.
+- Leaderboard approach: Calculate each team's total from its activities' points, order teams by total points descending, and assign ranks starting at 1. Return the contract fields `teamName`, `totalPoints`, and `rank`.
+- Workout suggestions approach: Find the user by email and use their goal and recent activity patterns to select relevant workouts. Include a human-readable reason for the first suggestion; return a deliberate 4xx when no user matches.
 
 ## Test plan
 
